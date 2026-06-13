@@ -26,10 +26,9 @@ let score = 0;
 let studentName = "";
 let seatNumber = "";
 
-// تم تعديل الاسم ليتطابق مع الشيت لديك تماماً
 const subjectName = "الانجليزى"; 
 
-const webAppUrl = "https://script.google.com/macros/s/AKfycbw89cxxVatLZ6LUpXWkRCjVOdSjWHidnRgoShRxQ2qyE-EcN1vZTnX8NvIuLmf2GMDz/exec"; 
+const webAppUrl = "https://script.google.com/macros/s/AKfycbzmeV7hBdpZqpDkaRvBPCzASNIkz9ekRBKq-KiidA0nU0PcZDTS9-OmY2f92eFpBloX/exec"; 
 
 const startScreen = document.getElementById('start-screen');
 const quizScreen = document.getElementById('quiz-screen');
@@ -122,25 +121,22 @@ function showResult() {
     sendDataToSheet();
 }
 
-// تم تعديل هذه الدالة بالكامل لترسل البيانات بصيغة JSON مطابقة لطلب السكريبت الخاص بك
 function sendDataToSheet() {
-    const payload = {
-        studentName: studentName,
-        seatNumber: seatNumber,
-        studentScore: `${score} / ${quizData.length}`, // يرسل النتيجة مثل: 4 / 4 ليتطابق مع شكل جدولك
-        subjectName: subjectName
-    };
+    const urlParams = new URLSearchParams();
+    urlParams.append('studentName', studentName);
+    urlParams.append('seatNumber', seatNumber);
+    urlParams.append('studentScore', `${score} / ${quizData.length}`);
+    urlParams.append('subjectName', subjectName);
 
     fetch(webAppUrl, {
         method: 'POST',
-        mode: 'no-cors', // لضمان الإرسال الآمن وتفادي مشاكل CORS
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: JSON.stringify(payload)
+        body: urlParams.toString()
     })
-    .then(() => {
-        console.log("Data packet sent to Web App successfully.");
+    .then(response => {
+        console.log("Data successfully sent to Google Sheets gateway.");
     })
-    .catch(error => console.error('Error!', error.message));
+    .catch(error => console.error('Network Error:', error.message));
 }
