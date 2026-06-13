@@ -29,7 +29,7 @@ let seatNumber = "";
 // تم تعديل الاسم ليتطابق مع الشيت لديك تماماً
 const subjectName = "الانجليزى"; 
 
-const webAppUrl = "https://google.com"; 
+const webAppUrl = "https://script.google.com/macros/s/AKfycbw89cxxVatLZ6LUpXWkRCjVOdSjWHidnRgoShRxQ2qyE-EcN1vZTnX8NvIuLmf2GMDz/exec"; 
 
 const startScreen = document.getElementById('start-screen');
 const quizScreen = document.getElementById('quiz-screen');
