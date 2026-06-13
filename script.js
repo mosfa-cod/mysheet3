@@ -27,7 +27,7 @@ let studentName = "";
 let seatNumber = "";
 
 // توجيه البيانات مباشرة لـ "الورقة1" الخاصة بالإنجليزي لفرزها تلقائياً
-const subjectName = "الورقة1"; 
+ const subjectName = "الانجليزى";
 
 // رابط تطبيق الويب الخاص بك للإرسال لشيت جوجل
 const webAppUrl = "https://script.google.com/macros/s/AKfycbxTOXrDLo7MNOnABa8GaUxECnMVw7LgbjeF7g8-P_piiIe62nIk_67rNFrdVWuDJxLf/exec"; 
