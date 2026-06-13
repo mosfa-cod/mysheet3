@@ -3,22 +3,22 @@ const quizQuestions = [
     {
         question: "1. She ________ to school every day.",
         options: ["go", "goes", "going", "gone"],
-        correct: 1 // الإجابة الصحيحة هي goes
+        correct: 1
     },
     {
         question: "2. Yesterday, we ________ a beautiful movie.",
         options: ["see", "seen", "saw", "watching"],
-        correct: 2 // الإجابة الصحيحة هي saw
+        correct: 2
     },
     {
         question: "3. Which word is a noun?",
         options: ["run", "beautiful", "apple", "quickly"],
-        correct: 2 // الإجابة الصحيحة هي apple
+        correct: 2
     },
     {
         question: "4. They ________ football at the moment.",
         options: ["are playing", "is playing", "played", "plays"],
-        correct: 0 // الإجابة الصحيحة هي are playing
+        correct: 0
     }
 ];
 
@@ -35,9 +35,8 @@ document.addEventListener("DOMContentLoaded", function() {
         startBtn.addEventListener("click", function(e) {
             e.preventDefault();
             
-            // جلب البيانات المكتوبة في الخانات
             const nameInput = document.querySelector('input[type="text"]');
-            const seatingInput = document.querySelector('input[type="number"]') || document.querySelectorAll('input')[1];
+            const seatingInput = document.querySelector('input[type="number"]') || document.querySelectorAll('input');
             
             studentName = nameInput ? nameInput.value.trim() : "مصطفى عبد العال";
             seatingNumber = seatingInput ? seatingInput.value.trim() : "188";
@@ -47,7 +46,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 return;
             }
             
-            // تحويل الواجهة لعرض الأسئلة
             startQuiz();
         });
     }
@@ -76,7 +74,7 @@ function showQuestion() {
     
     currentQuestion.options.forEach((option, index) => {
         optionsContainer.innerHTML += `
-            <label style="background: #f0f0f0; padding: 12px; border-radius: 8px; cursor: pointer; display: block; font-size: 16px;">
+            <label style="background: #f0f0f0; padding: 12px; border-radius: 8px; cursor: pointer; display: block; font-size: 16px; margin-bottom: 5px;">
                 <input type="radio" name="quizOption" value="${index}" style="margin-left: 10px;"> ${option}
             </label>
         `;
@@ -98,7 +96,6 @@ function handleNextClick() {
         return;
     }
     
-    // التحقق من الإجابة الصحيحة وحساب الدرجة
     if (parseInt(selectedOption.value) === quizQuestions[currentQuestionIndex].correct) {
         studentScore++;
     }
@@ -107,12 +104,11 @@ function handleNextClick() {
         currentQuestionIndex++;
         showQuestion();
     } else {
-        // إذا كان هذا آخر سؤال، أرسل البيانات فوراً لجوجل شيت
         sendFinalDataToSheets();
     }
 }
 
-// 6. دالة الإرسال الفعلي والنهائي إلى جوجل شيت والانتقال لصفحة النجاح
+// 6. دالة الإرسال الفعلي وعرض النتيجة في نفس الصفحة دون الانتقال لصفحة 404
 function sendFinalDataToSheets() {
     const webAppUrl = "https://script.google.com/macros/s/AKfycbxNvwTs6OVjZ52gbkdtzLZnlPPNtYh78IfIp1XkYiD7BARXM00EYJQJzrbp9QG1vpPj/exec"; 
     
@@ -120,13 +116,24 @@ function sendFinalDataToSheets() {
     const percentage = (studentScore / quizQuestions.length) * 100;
     const subjectName = "الانجليزى";
 
-    // صياغة البيانات المشفرة لعدم حدوث حظر CORS
     const requestBody = "studentName=" + encodeURIComponent(studentName) +
                         "&seatingNumber=" + encodeURIComponent(seatingNumber) +
                         "&score=" + encodeURIComponent(finalScoreText) +
                         "&subject=" + encodeURIComponent(subjectName);
 
-    // إرسال البيانات خلف الكواليس
+    // عرض النتيجة للطالب فوراً لتفادي شاشة الـ 404 المزعجة
+    const container = document.querySelector(".container") || document.body;
+    container.innerHTML = `
+        <div style="text-align: center; direction: rtl; padding: 30px;">
+            <h1 style="color: #3f37c9; font-size: 26px;">تم الانتهاء من الاختبار بنجاح</h1>
+            <div style="font-size: 58px; font-weight: bold; color: #7b2cbf; margin: 20px 0;">%${percentage}</div>
+            <div style="color: #2ec4b6; font-size: 18px; font-weight: bold; margin-bottom: 15px;">تم تسجيل إجاباتك وإرسال الدرجة تلقائياً.</div>
+            <div style="font-size: 20px; color: #555555; margin-bottom: 10px;">أحسنت يا ${studentName}!</div>
+            <div style="font-size: 16px; color: #777;">لقد حصلت على درجة: ${finalScoreText}</div>
+        </div>
+    `;
+
+    // إرسال البيانات خلف الكواليس لجوجل شيت بدون حظر CORS
     fetch(webAppUrl, {
         method: "POST",
         mode: "no-cors",
@@ -137,10 +144,6 @@ function sendFinalDataToSheets() {
     })
     .then(() => {
         console.log("تم حفظ النتيجة في جوجل شيت بنجاح!");
-        // الانتقال التلقائي لصفحة success.html وعرض اسم الطالب والنسبة المئوية الحقيقية له
-        window.location.href = "success.html?name=" + encodeURIComponent(studentName) + 
-                               "&score=" + encodeURIComponent(finalScoreText) + 
-                               "&percent=" + percentage;
     })
     .catch((error) => {
         console.error("خطأ في الاتصال بالسيرفر وجداول البيانات:", error);
