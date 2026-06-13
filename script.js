@@ -29,7 +29,7 @@ let seatNumber = "";
 // ⚠️ توجيه البيانات مباشرة لـ "الورقة1" بالأسفل الخاصة بالإنجليزي لفرزها تلقائياً
 const subjectName = "الورقة1"; 
 
-// ⚠️ ضع رابط تطبيق الويب الموحد الخاص بك (الإصدار 11) هنا:
+// ⚠️ رابط تطبيق الويب الموحد الخاص بك:
 const webAppUrl = "https://script.google.com/macros/s/AKfycbw1e0InrFkVdabwDd5F_WbHSqYtHphtbscWoYulYWsxUjI0cypHPZ7LPXOSJXuatq_S/exec"; 
 
 const startScreen = document.getElementById('start-screen');
@@ -76,27 +76,29 @@ function loadQuestion() {
 }
 
 function selectAnswer(selectedButton, currentQuestion) {
-    const selectedOption = selectedButton.textContent;
-    const correctOption = currentQuestion.correct;
+    // استخدام .trim() لإزالة الفراغات المخفية لضمان المطابقة الصحيحة
+    const selectedOption = selectedButton.textContent.trim();
+    const correctOption = currentQuestion.correct.trim();
     
-    // Disable all option buttons after selection
+    // تعطيل الأزرار لمنع تغيير الإجابة
     const buttons = optionsContainer.querySelectorAll('.option-btn');
     buttons.forEach(button => button.disabled = true);
     
-    // Highlight correct and incorrect answers
+    // تم تغيير الكلاس هنا إلى .wrong ليتطابق مع الـ CSS المكتوب عندك
     if (selectedOption === correctOption) {
         score++;
-        selectedButton.classList.add('correct'); // Add CSS class for correct styling
+        selectedButton.classList.add('correct'); 
     } else {
-        selectedButton.classList.add('incorrect'); // Add CSS class for incorrect styling
-        // Highlight the correct one
+        selectedButton.classList.add('wrong'); 
+        // إظهار الإجابة الصحيحة باللون الأخضر للطالب
         buttons.forEach(button => {
-            if (button.textContent === correctOption) {
+            if (button.textContent.trim() === correctOption) {
                 button.classList.add('correct');
             }
         });
     }
     
+    // إظهار زر التالي
     nextBtn.classList.remove('hidden');
 }
 
@@ -115,9 +117,16 @@ function showResult() {
     resultScreen.classList.remove('hidden');
     
     const percentage = Math.round((score / quizData.length) * 100);
+    
+    // تحديث رقم النتيجة الكبير في الشاشة
+    const finalScoreElement = document.getElementById('final-score');
+    if (finalScoreElement) {
+        finalScoreElement.textContent = `%${percentage}`;
+    }
+    
     document.getElementById('result-text').innerHTML = `أحسنت يا ${studentName}!<br>لقد حصلت على ${score} من ${quizData.length} (${percentage}%)`;
     
-    // Send Data to Google Sheets
+    // إرسال البيانات لشيت جوجل
     sendDataToSheet();
 }
 
