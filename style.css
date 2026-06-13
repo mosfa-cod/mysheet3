@@ -1,219 +1,176 @@
- * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+ /* 1. التنسيقات العامة والخطوط */
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+} 
 
-body {
-    background: linear-gradient(135deg, #b19ffb 0%, #fcb1df 100%);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
+body { 
+    background: linear-gradient(135deg, #b19ffb 0%, #fcb1df 100%); 
+    min-height: 100vh; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    padding: 20px; 
+} 
 
-.container {
-    width: 100%;
-    max-width: 650px;
-}
+/* 2. الحاويات والبطاقات */
+.container { 
+    width: 100%; 
+    max-width: 650px; 
+} 
 
-.card {
-    background: #ffffff;
-    border-radius: 20px;
-    padding: 40px 30px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
+.card { 
+    background: #ffffff; 
+    border-radius: 20px; 
+    padding: 40px 30px; 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); 
+    text-align: center; 
+} 
 
-.main-title {
-    color: #4a148c;
-    font-size: 26px;
-    margin-bottom: 5px;
-}
+/* 3. النصوص والعناوين */
+.main-title { 
+    color: #4a148c; 
+    font-size: 26px; 
+    margin-bottom: 5px; 
+} 
 
-.subtitle {
-    color: #6c757d;
-    font-size: 16px;
-    margin-bottom: 30px;
-    font-weight: bold;
-}
+.subtitle { 
+    color: #6c757d; 
+    font-size: 16px; 
+    margin-bottom: 30px; 
+    font-weight: bold; 
+} 
 
-.input-group {
-    text-align: right;
-    margin-bottom: 20px;
-}
+/* 4. حقول الإدخال والبيانات */
+.input-group { 
+    text-align: right; 
+    margin-bottom: 20px; 
+} 
 
-.input-group label {
-    display: block;
-    margin-bottom: 8px;
-    color: #4a4e69;
-    font-weight: 600;
-    font-size: 15px;
-}
+.input-group label { 
+    display: block; 
+    margin-bottom: 8px; 
+    color: #4a4e69; 
+    font-weight: 600; 
+    font-size: 15px; 
+} 
 
-input[type="text"] {
-    width: 100%;
-    padding: 14px;
-    border: 2px solid #ced4da;
-    border-radius: 10px;
-    font-size: 16px;
-    text-align: center;
-    outline: none;
-    transition: border-color 0.2s;
-}
+input[type="text"] { 
+    width: 100%; 
+    padding: 14px; 
+    border: 2px solid #ced4da; 
+    border-radius: 10px; 
+    font-size: 16px; 
+    text-align: center; 
+    outline: none; 
+    transition: border-color 0.2s; 
+} 
 
-input[type="text"]:focus {
-    border-color: #7b1fa2;
-}
+input[type="text"]:focus { 
+    border-color: #7b1fa2; 
+} 
 
-.btn {
-    background: linear-gradient(to right, #7b1fa2, #e91e63);
-    color: white;
-    border: none;
-    padding: 15px 35px;
-    font-size: 18px;
-    font-weight: bold;
-    border-radius: 12px;
-    cursor: pointer;
-    width: 100%;
-    box-shadow: 0 5px 15px rgba(123, 31, 162, 0.3);
-    margin-top: 10px;
-}
+/* 5. الأزرار العامة وزر التالي */
+.btn { 
+    background: linear-gradient(to right, #7b1fa2, #e91e63); 
+    color: white; 
+    border: none; 
+    padding: 15px 35px; 
+    font-size: 18px; 
+    font-weight: bold; 
+    border-radius: 12px; 
+    cursor: pointer; 
+    width: 100%; 
+    box-shadow: 0 5px 15px rgba(123, 31, 162, 0.3); 
+    margin-top: 10px; 
+} 
 
-.options-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin: 25px 0;
-}
+#next-btn { 
+    margin-top: 40px !important; 
+    margin-bottom: 10px !important; 
+} 
 
-.option-btn {
-    background: #f8f9fa;
-    border: 2px solid #f1f3f5;
-    padding: 14px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 16px;
-    text-align: left;
-    transition: all 0.2s;
-    font-weight: 500;
-}
+/* 6. حاوية خيارات الأسئلة */
+#options-container, .options-grid { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 14px; 
+    margin: 25px 0 35px 0 !important; 
+    width: 100%; 
+} 
 
-.option-btn:hover {
-    background: #e9ecef;
-}
+/* 7. أزرار الخيارات وحالاتها */
+.option-btn { 
+    background-color: #f8f9fa; 
+    border: 2px solid #ced4da; 
+    border-radius: 10px; 
+    padding: 14px 20px; 
+    font-size: 16px; 
+    cursor: pointer; 
+    text-align: left; /* محاذاة لليسار لأن الأسئلة إنجليزية */ 
+    direction: ltr;
+    width: 100%; 
+    box-sizing: border-box; 
+    transition: all 0.2s ease; 
+    font-weight: 500; 
+    color: #4a5568;
+} 
 
-.option-btn.correct {
-    background: #d4edda;
-    border-color: #c3e6cb;
-    color: #155724;
-    font-weight: bold;
-}
+.option-btn:hover:not(:disabled) { 
+    background-color: #e9ecef; 
+    border-color: #999; 
+} 
 
-.option-btn.wrong {
-    background: #f8d7da;
-    border-color: #f5c6cb;
-    color: #721c24;
-    font-weight: bold;
-}
+/* ألوان النتيجة الصحيحة والخاطئة */
+.option-btn.correct { 
+    background-color: #d4edda !important; 
+    border-color: #c3e6cb !important; 
+    color: #155724 !important; 
+    font-weight: bold; 
+} 
 
-.hidden {
-    display: none !important;
-}
+.option-btn.wrong, .option-btn.incorrect { 
+    background-color: #f8d7da !important; 
+    border-color: #f5c6cb !important; 
+    color: #721c24 !important; 
+    font-weight: bold; 
+} 
 
-.quiz-header {
-    display: flex;
-    justify-content: space-between;
-    color: #888;
-    font-size: 14px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
-}
+.option-btn:disabled { 
+    cursor: not-allowed; 
+    opacity: 0.85; 
+} 
 
-.student-info-box {
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    text-align: right;
-    border-right: 5px solid #7b1fa2;
-}
+/* 8. شاشات الفحص والنتيجة */
+.hidden { 
+    display: none !important; 
+} 
 
-.score-box {
-    margin: 20px 0;
-    font-size: 20px;
-}
+.quiz-header { 
+    display: flex; 
+    justify-content: space-between; 
+    color: #888; 
+    font-size: 14px; 
+    margin-bottom: 20px; 
+    border-bottom: 1px solid #eee; 
+    padding-bottom: 10px; 
+} 
 
-#final-score {
-    font-size: 48px;
-    font-weight: bold;
-    color: #7b1fa2;
-}
+.score-box { 
+    margin: 20px 0; 
+    font-size: 20px; 
+} 
 
-.status-message {
-    color: #4caf50;
-    font-weight: bold;
-    margin-top: 15px;
-}
-/* دفع زر التالي لأسفل الشاشة تماماً لمنع التداخل والضغط التلقائي */
-#next-btn, .next-button, button[id*="next"] {
-    margin-top: 50px !important;
-    margin-bottom: 20px !important;
-}
+#final-score { 
+    font-size: 48px; 
+    font-weight: bold; 
+    color: #7b1fa2; 
+} 
 
-/* إضافة مسافة أمان إضافية لحاوية الخيارات */
-.options-wrapper, .options-container {
-    margin-bottom: 30px !important;
+.status-message { 
+    color: #4caf50; 
+    font-weight: bold; 
+    margin-top: 15px; 
 }
-/* الحاوية التي تجمع الأزرار */
-#options-container {
-    display: flex;
-    flex-direction: column; /* ترتيب الأزرار تحت بعضها */
-    gap: 12px;              /* مسافة ثابتة تمنع التداخل */
-    margin: 20px 0;
-    width: 100%;
-}
-
-/* تنسيق زر الاختيار الافتراضي */
-.option-btn {
-    background-color: #f0f0f0;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    padding: 12px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    text-align: right;    /* ليتناسب مع اللغة العربية */
-    width: 100%;          /* جعل كل الأزرار بنفس العرض */
-    box-sizing: border-box;
-    transition: all 0.2s ease;
-}
-
-/* تأثير عند مرور الماوس */
-.option-btn:hover:not(:disabled) {
-    background-color: #e0e0e0;
-    border-color: #999;
-}
-
-/* الألوان عند اختيار الإجابة (تلقائي من الـ JavaScript) */
-.option-btn.correct {
-    background-color: #d4edda !important;
-    border-color: #c3e6cb !important;
-    color: #155724 !important;
-}
-
-.option-btn.incorrect {
-    background-color: #f8d7da !important;
-    border-color: #f5c6cb !important;
-    color: #721c24 !important;
-}
-
-/* لمنع الضغط مرة أخرى بعد الاختيار */
-.option-btn:disabled {
-    cursor: not-allowed;
-    opacity: 0.8;
-}
-
-
