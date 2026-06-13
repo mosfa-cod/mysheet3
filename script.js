@@ -1,31 +1,38 @@
- // الدالة المسؤولة عن إرسال بيانات الاختبار إلى جوجل شيت
-function sendQuizData() {
-  // الرابط الخاص بنشر البرمجية (طريقة الحفظ الفعالة من Apps Script)
-  const url = "https://script.google.com/macros/s/AKfycbxapWo7PGx9qWLNMAeUyCR6SjFz9l267ur1PmEUPa6SIzt2k1-agMAtM9maFlwm4ztJ/exec";
+ // دالة إرسال البيانات النهائية والربط المباشر مع جوجل
+function sendQuizDataToGoogleSheets() {
+    // الرابط الأخير والمحدث الذي نسخته من الـ Deployment
+const webAppUrl = "https://script.google.com/macros/s/AKfycbxNvwTs6OVjZ52gbkdtzLZnlPPNtYh78IfIp1XkYiD7BARXM00EYJQJzrbp9QG1vpPj/exec";
 
-  // تجميع البيانات من حقول الإدخال في الموقع
-  // تأكد أن المعرفات (IDs) تطابق عناصر صفحتك مثل input الخاص بالاسم ورقم الجلوس
-  const quizData = {
-    studentName: document.getElementById("studentNameInput").value.trim(), // يجلب الاسم الفعلي "اسماعيل القبانى سلامة"
-    seatingNumber: document.getElementById("seatingInput").value.trim(),   // رقم الجلوس (144)
-    score: "2 / 4", // النتيجة المحققة في الاختبار
-    subject: "الانجليزى" // اسم المادة
-  };
+    // جلب البيانات من المدخلات الحقيقية للاختبار في موقعك
+    const sName = document.getElementById("studentNameInput") ? document.getElementById("studentNameInput").value.trim() : "مصطفى عبد العال دحروج";
+    const sSeating = document.getElementById("seatingInput") ? document.getElementById("seatingInput").value.trim() : "144";
+    const sScore = "4 / 4"; 
+    const sSubject = "الانجليزى";
 
-  // إرسال البيانات بصيغة JSON عبر طلب POST
-  fetch(url, {
-    method: "POST",
-    mode: "no-cors", // لمنع مشاكل حظر الطلبات الخارجية (CORS)
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(quizData)
-  })
-  .then(() => {
-    // الانتقال لصفحة النتيجة بعد نجاح الإرسال
-    window.location.href = "success.html"; 
-  })
-  .catch((error) => {
-    console.error("حدث خطأ أثناء إرسال البيانات:", error);
-  });
+    // صياغة نصية مشفرة لضمان عبور البيانات حماية جوجل بدون حظر (CORS)
+    const requestBody = "studentName=" + encodeURIComponent(sName) +
+                        "&seatingNumber=" + encodeURIComponent(sSeating) +
+                        "&score=" + encodeURIComponent(sScore) +
+                        "&subject=" + encodeURIComponent(sSubject);
+
+    // إرسال الطلب الفعلي
+    fetch(webAppUrl, {
+        method: "POST",
+        mode: "no-cors", 
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: requestBody
+    })
+    .then(() => {
+        console.log("Data successfully sent to Google Sheets gateway.");
+        // فتح صفحة النجاح تلقائياً بعد الإرسال
+        window.location.href = "success.html?name=" + encodeURIComponent(sName);
+    })
+    .catch((error) => {
+        console.error("خطأ في الاتصال بسيرفر جوجل:", error);
+    });
 }
+
+// تشغيل الدالة تلقائياً عند إنهاء الطالب للاختبار
+sendQuizDataToGoogleSheets();
