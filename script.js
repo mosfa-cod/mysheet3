@@ -28,7 +28,7 @@ let seatNumber = "";
 
 const subjectName = "الانجليزى"; 
 
-const webAppUrl = "https://script.google.com/macros/s/AKfycbzmeV7hBdpZqpDkaRvBPCzASNIkz9ekRBKq-KiidA0nU0PcZDTS9-OmY2f92eFpBloX/exec"; 
+const webAppUrl = "https://script.google.com/macros/s/AKfycbxEYNTiQE5ZfyA3HX-kH0WOlt0moxmYjtqa3CBOLjMFWO6S6l62krcviTK5lfwJqesw/exec"; 
 
 const startScreen = document.getElementById('start-screen');
 const quizScreen = document.getElementById('quiz-screen');
