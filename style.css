@@ -168,4 +168,52 @@ input[type="text"]:focus {
 .options-wrapper, .options-container {
     margin-bottom: 30px !important;
 }
+/* الحاوية التي تجمع الأزرار */
+#options-container {
+    display: flex;
+    flex-direction: column; /* ترتيب الأزرار تحت بعضها */
+    gap: 12px;              /* مسافة ثابتة تمنع التداخل */
+    margin: 20px 0;
+    width: 100%;
+}
+
+/* تنسيق زر الاختيار الافتراضي */
+.option-btn {
+    background-color: #f0f0f0;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: right;    /* ليتناسب مع اللغة العربية */
+    width: 100%;          /* جعل كل الأزرار بنفس العرض */
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+/* تأثير عند مرور الماوس */
+.option-btn:hover:not(:disabled) {
+    background-color: #e0e0e0;
+    border-color: #999;
+}
+
+/* الألوان عند اختيار الإجابة (تلقائي من الـ JavaScript) */
+.option-btn.correct {
+    background-color: #d4edda !important;
+    border-color: #c3e6cb !important;
+    color: #155724 !important;
+}
+
+.option-btn.incorrect {
+    background-color: #f8d7da !important;
+    border-color: #f5c6cb !important;
+    color: #721c24 !important;
+}
+
+/* لمنع الضغط مرة أخرى بعد الاختيار */
+.option-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
 
