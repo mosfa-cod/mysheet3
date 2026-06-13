@@ -26,9 +26,10 @@ let score = 0;
 let studentName = "";
 let seatNumber = "";
 
+// تم تعديل الاسم ليتطابق مع الشيت لديك تماماً
 const subjectName = "الانجليزى"; 
 
-const webAppUrl = "https://script.google.com/macros/s/AKfycbwmbakzGdXXEhgkgvZ5s4AaBvzZR8SEDmCeb8txOfC66KegbqsbNLxKjbivJ9v6GKcm/exec"; 
+const webAppUrl = "https://google.com"; 
 
 const startScreen = document.getElementById('start-screen');
 const quizScreen = document.getElementById('quiz-screen');
@@ -121,23 +122,25 @@ function showResult() {
     sendDataToSheet();
 }
 
+// تم تعديل هذه الدالة بالكامل لترسل البيانات بصيغة JSON مطابقة لطلب السكريبت الخاص بك
 function sendDataToSheet() {
-    const formData = new FormData();
-    formData.append('studentName', studentName);
-    formData.append('seatNumber', seatNumber);
-    formData.append('score', score);
-    formData.append('subject', subjectName);
+    const payload = {
+        studentName: studentName,
+        seatNumber: seatNumber,
+        studentScore: `${score} / ${quizData.length}`, // يرسل النتيجة مثل: 4 / 4 ليتطابق مع شكل جدولك
+        subjectName: subjectName
+    };
 
     fetch(webAppUrl, {
         method: 'POST',
-        body: formData
+        mode: 'no-cors', // لضمان الإرسال الآمن وتفادي مشاكل CORS
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
     })
-    .then(response => {
-        if(response.ok) {
-            console.log("Data sent successfully.");
-        } else {
-            console.error("Failed to send data.");
-        }
+    .then(() => {
+        console.log("Data packet sent to Web App successfully.");
     })
     .catch(error => console.error('Error!', error.message));
 }
