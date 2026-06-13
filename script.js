@@ -26,10 +26,10 @@ let score = 0;
 let studentName = "";
 let seatNumber = "";
 
-// ⚠️ توجيه البيانات مباشرة لـ "الورقة1" بالأسفل الخاصة بالإنجليزي لفرزها تلقائياً
+// توجيه البيانات مباشرة لـ "الورقة1" الخاصة بالإنجليزي لفرزها تلقائياً
 const subjectName = "الورقة1"; 
 
-// ⚠️ رابط تطبيق الويب الموحد الخاص بك:
+// رابط تطبيق الويب الخاص بك للإرسال لشيت جوجل
 const webAppUrl = "https://script.google.com/macros/s/AKfycbw1e0InrFkVdabwDd5F_WbHSqYtHphtbscWoYulYWsxUjI0cypHPZ7LPXOSJXuatq_S/exec"; 
 
 const startScreen = document.getElementById('start-screen');
@@ -76,21 +76,18 @@ function loadQuestion() {
 }
 
 function selectAnswer(selectedButton, currentQuestion) {
-    // استخدام .trim() لإزالة الفراغات المخفية لضمان المطابقة الصحيحة
+    // إزالة الفراغات لضمان المطابقة البصرية والبرمجية التامة
     const selectedOption = selectedButton.textContent.trim();
     const correctOption = currentQuestion.correct.trim();
     
-    // تعطيل الأزرار لمنع تغيير الإجابة
     const buttons = optionsContainer.querySelectorAll('.option-btn');
     buttons.forEach(button => button.disabled = true);
     
-    // تم تغيير الكلاس هنا إلى .wrong ليتطابق مع الـ CSS المكتوب عندك
     if (selectedOption === correctOption) {
         score++;
         selectedButton.classList.add('correct'); 
     } else {
-        selectedButton.classList.add('wrong'); 
-        // إظهار الإجابة الصحيحة باللون الأخضر للطالب
+        selectedButton.classList.add('wrong'); // متناسق تماماً مع كلاس الـ CSS الحالي لديك
         buttons.forEach(button => {
             if (button.textContent.trim() === correctOption) {
                 button.classList.add('correct');
@@ -98,7 +95,6 @@ function selectAnswer(selectedButton, currentQuestion) {
         });
     }
     
-    // إظهار زر التالي
     nextBtn.classList.remove('hidden');
 }
 
@@ -118,15 +114,13 @@ function showResult() {
     
     const percentage = Math.round((score / quizData.length) * 100);
     
-    // تحديث رقم النتيجة الكبير في الشاشة
     const finalScoreElement = document.getElementById('final-score');
     if (finalScoreElement) {
         finalScoreElement.textContent = `%${percentage}`;
     }
     
-    document.getElementById('result-text').innerHTML = `أحسنت يا ${studentName}!<br>لقد حصلت على ${score} من ${quizData.length} (${percentage}%)`;
+    document.getElementById('result-text').innerHTML = `أحسنت يا <strong>${studentName}</strong>!<br>لقد حصلت على ${score} من أصل ${quizData.length} إجابات صحيحة.`;
     
-    // إرسال البيانات لشيت جوجل
     sendDataToSheet();
 }
 
