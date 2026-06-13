@@ -4,57 +4,199 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>اختبار اللغة الإنجليزية</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #c77dff, #e0aaff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+        h1, h2 {
+            color: #3f37c9;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #666;
+            margin-bottom: 25px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-size: 16px;
+            text-align: center;
+        }
+        .btn {
+            background: linear-gradient(90deg, #7b2cbf, #5a189a);
+            color: white;
+            border: none;
+            padding: 14px;
+            width: 100%;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(123, 44, 191, 0.3);
+        }
+        .option-label {
+            background: #f8f9fa;
+            padding: 14px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            cursor: pointer;
+            display: block;
+            font-size: 18px;
+            margin-bottom: 10px;
+            text-align: right;
+        }
+    </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- 1. شاشة البدء ودخول الطالب -->
-        <div id="start-screen" class="card">
-            <h1 class="main-title">اختبار اللغة الإنجليزية</h1>
-            <p class="subtitle">يرجى إدخال البيانات للبدء</p>
-            
-            <div class="input-group">
-                <label for="student-name">اسم الطالب ثلاثي:</label>
-                <input type="text" id="student-name" placeholder="أدخل اسمك هنا..." autocomplete="off">
-            </div>
-            
-            <div class="input-group">
-                <label for="seat-number">رقم الجلوس:</label>
-                <input type="text" id="seat-number" placeholder="أدخل رقم جلوسك..." autocomplete="off">
-            </div>
-            
-            <button id="start-btn" class="btn">ابدأ الاختبار الآن</button>
+    <div class="container" id="quizContainer">
+        <!-- واجهة الدخول الأساسية -->
+        <h1>اختبار اللغة الإنجليزية</h1>
+        <p>يرجى إدخال البيانات للبدء</p>
+        
+        <div class="form-group">
+            <label>اسم الطالب ثلاثي:</label>
+            <input type="text" id="studentNameInput" placeholder="اكتب اسمك هنا">
         </div>
-
-        <!-- 2. شاشة عرض الأسئلة الكويز -->
-        <div id="quiz-screen" class="card hidden">
-            <div class="quiz-header">
-                <span id="progress">السؤال 1 من 4</span>
-                <span id="subject-title">اللغة الإنجليزية</span>
-            </div>
-            
-            <!-- نص السؤال مائل لليسار ليناسب اللغة الإنجليزية -->
-            <h2 id="question-text" style="text-align: left; direction: ltr; margin: 25px 0; color: #2d3748;"></h2>
-            
-            <!-- حاوية خيارات الأجوبة المتناسقة منعاً للتداخل -->
-            <div id="options-container" class="options-grid"></div>
-            
-            <!-- زر الانتقال للسؤال التالي المصلح والمحمي -->
-            <button id="next-btn" class="btn hidden">السؤال التالي ←</button>
+        
+        <div class="form-group">
+            <label>رقم الجلوس:</label>
+            <input type="number" id="seatingInput" placeholder="اكتب رقم جلوسك هنا">
         </div>
-
-        <!-- 3. شاشة عرض النتيجة النهائية -->
-        <div id="result-screen" class="card hidden">
-            <h1 class="main-title">تم الانتهاء من الاختبار</h1>
-            <div class="score-box">
-                <div id="final-score">0</div>
-                <p class="status-message" id="result-message">تم إرسال درجتك تلقائياً إلى المعلم.</p>
-            </div>
-            <div id="result-text" style="font-size: 18px; color: #4a5568; line-height: 1.6; margin-top: 15px;"></div>
-        </div>
+        
+        <button class="btn" onclick="startQuiz()">ابدأ الاختبار الآن</button>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // مصفوفة الأسئلة
+        const quizQuestions = [
+            { question: "1. She ________ to school every day.", options: ["go", "goes", "going", "gone"], correct: 1 },
+            { question: "2. Yesterday, we ________ a beautiful movie.", options: ["see", "seen", "saw", "watching"], correct: 2 },
+            { question: "3. Which word is a noun?", options: ["run", "beautiful", "apple", "quickly"], correct: 2 },
+            { question: "4. They ________ football at the moment.", options: ["are playing", "is playing", "played", "plays"], correct: 0 }
+        ];
+
+        let currentQuestionIndex = 0;
+        let studentScore = 0;
+        let studentName = "";
+        let seatingNumber = "";
+
+        // دالة بدء الاختبار عند الضغط على الزر
+        function startQuiz() {
+            studentName = document.getElementById("studentNameInput").value.trim();
+            seatingNumber = document.getElementById("seatingInput").value.trim();
+            
+            if (studentName === "" || seatingNumber === "") {
+                alert("يرجى إدخال الاسم ورقم الجلوس أولاً!");
+                return;
+            }
+            
+            showQuestion();
+        }
+
+        // دالة عرض السؤال
+        function showQuestion() {
+            const currentQuestion = quizQuestions[currentQuestionIndex];
+            const container = document.getElementById("quizContainer");
+            
+            let optionsHTML = "";
+            currentQuestion.options.forEach((option, index) => {
+                optionsHTML += `
+                    <label class="option-label">
+                        <input type="radio" name="quizOption" value="${index}" style="margin-left: 12px; transform: scale(1.2);"> ${option}
+                    </label>
+                `;
+            });
+
+            const btnText = (currentQuestionIndex === quizQuestions.length - 1) ? "إنهاء الاختبار وإرسال النتيجة" : "التالي";
+
+            container.innerHTML = `
+                <div style="text-align: right; direction: rtl;">
+                    <h2>${currentQuestion.question}</h2>
+                    <div id="optionsContainer">${optionsHTML}</div>
+                    <button class="btn" style="margin-top: 15px;" onclick="handleNextClick()">${btnText}</button>
+                </div>
+            `;
+        }
+
+        // دالة معالجة الإجابات والانتقال
+        function handleNextClick() {
+            const selectedOption = document.querySelector('input[name="quizOption"]:checked');
+            if (!selectedOption) {
+                alert("يرجى اختيار إجابة واحدة!");
+                return;
+            }
+            
+            if (parseInt(selectedOption.value) === quizQuestions[currentQuestionIndex].correct) {
+                studentScore++;
+            }
+            
+            if (currentQuestionIndex < quizQuestions.length - 1) {
+                currentQuestionIndex++;
+                showQuestion();
+            } else {
+                sendFinalDataToSheets();
+            }
+        }
+
+        // دالة الإرسال وعرض لوحة النجاح النهائية فوراً
+        function sendFinalDataToSheets() {
+            const webAppUrl = "https://google.com"; 
+            
+            const finalScoreText = studentScore + " / " + quizQuestions.length;
+            const percentage = (studentScore / quizQuestions.length) * 100;
+
+            const container = document.getElementById("quizContainer");
+            container.innerHTML = `
+                <div style="text-align: center; direction: rtl; padding: 20px;">
+                    <h1 style="color: #3f37c9; font-size: 26px;">تم الانتهاء من الاختبار بنجاح</h1>
+                    <div style="font-size: 64px; font-weight: bold; color: #7b2cbf; margin: 20px 0;">%${percentage}</div>
+                    <div style="color: #2ec4b6; font-size: 18px; font-weight: bold; margin-bottom: 15px;">تم تسجيل إجاباتك وإرسال الدرجة تلقائياً.</div>
+                    <div style="font-size: 20px; color: #555555; margin-bottom: 10px;">أحسنت يا ${studentName}!</div>
+                    <div style="font-size: 16px; color: #777;">لقد حصلت على درجة: ${finalScoreText}</div>
+                </div>
+            `;
+
+            const requestBody = "studentName=" + encodeURIComponent(studentName) +
+                                "&seatingNumber=" + encodeURIComponent(seatingNumber) +
+                                "&score=" + encodeURIComponent(finalScoreText) +
+                                "&subject=" + encodeURIComponent("الانجليزى");
+
+            fetch(webAppUrl, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: requestBody
+            }).catch(err => console.error(err));
+        }
+    </script>
 </body>
 </html>
