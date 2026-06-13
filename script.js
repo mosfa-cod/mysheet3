@@ -75,6 +75,13 @@ function loadQuestion() {
         optionsContainer.appendChild(button);
     });
 }
+    // 🛡️ درع حماية زمني لمنع تداخل النقرات الممتدة وتجميد الأجوبة لـ 400 مللي ثانية
+    const allOptions = document.querySelectorAll('.option-btn');
+    allOptions.forEach(btn => btn.style.pointerEvents = 'none');
+    setTimeout(() => {
+        allOptions.forEach(btn => btn.style.pointerEvents = 'auto');
+    }, 400);
+
 
 function selectOption(selectedBtn, index) {
     const currentQuestion = quizData[currentQuestionIndex];
