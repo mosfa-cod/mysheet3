@@ -1,26 +1,26 @@
- // بنك أسئلة مادة اللغة الإنجليزية التفاعلي
-const quizData = [
-    {
-        question: "We use our _________ to smell flowers.",
-        options: ["eyes", "ears", "nose", "hands"],
-        correct: 2 // الإجابة الصحيحة هي nose
-    },
-    {
-        question: "The elephant is _________ than the monkey.",
-        options: ["biggest", "bigger", "small", "tallest"],
-        correct: 1 // الإجابة الصحيحة هي bigger
-    },
-    {
-        question: "She _________ English every day.",
-        options: ["study", "studies", "studying", "studied"],
-        correct: 1 // الإجابة الصحيحة هي studies
-    },
-    {
-        question: "Where _________ you from?",
-        options: ["is", "am", "are", "be"],
-        correct: 2 // الإجابة الصحيحة هي are
-    }
+ const quizData = [
+  {
+    question: "We use our ________ to smell flowers.",
+    options: ["eyes", "ears", "nose", "hands"],
+    correct: "nose"
+  },
+  {
+    question: "The elephant is ________ than the monkey.",
+    options: ["biggest", "bigger", "small", "tallest"],
+    correct: "bigger"
+  },
+  {
+    question: "She ________ English every day.",
+    options: ["study", "studies", "studying", "studied"],
+    correct: "studies"
+  },
+  {
+    question: "Where ________ you from?",
+    options: ["is", "am", "are", "be"],
+    correct: "are"
+  }
 ];
+
 
 let currentQuestionIndex = 0;
 let score = 0;
