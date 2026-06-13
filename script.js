@@ -31,7 +31,7 @@ let seatNumber = "";
 const subjectName = "الورقة1"; 
 
 // ⚠️ ضع رابط تطبيق الويب الموحد الخاص بك (الإصدار 11) هنا:
-const webAppUrl = "ضع_رابط_تطبيق_الويب_الخاص_بك_هنا"; 
+const webAppUrl = "https://script.google.com/macros/s/AKfycbxuxoyjtyQdzvS1wysY0xMUZPHZvVVrQQaiEo6nrkWQqfmWogvVa2r5GA4CIe_txFXw/exec"; 
 
 const startScreen = document.getElementById('start-screen');
 const quizScreen = document.getElementById('quiz-screen');
@@ -113,7 +113,7 @@ function showResults() {
         studentName: studentName,
         seatNumber: seatNumber,
         studentScore: `${score} / ${quizData.length}`,
-        subjectName: subjectName
+subjectName: "الانجليزى"
     };
 
     fetch(webAppUrl, {
