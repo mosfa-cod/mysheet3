@@ -27,38 +27,44 @@ let studentScore = 0;
 let studentName = "";
 let seatingNumber = "";
 
-// 2. التحكم في واجهة الموقع والزر البنفسجي للبدء
+// 2. الدالة الأساسية لزر البدء والتي يبحث عنها كود الـ HTML لديك
+function startQuiz() {
+    // جلب المدخلات بأكثر من طريقة لضمان التقاط الاسم ورقم الجلوس
+    const nameInput = document.querySelector('input[type="text"]') || document.getElementById("studentNameInput");
+    const seatingInput = document.querySelector('input[type="number"]') || document.getElementById("seatingInput") || document.querySelector('input[type="text"]:last-of-type');
+    
+    studentName = nameInput ? nameInput.value.trim() : "";
+    seatingNumber = seatingInput ? seatingInput.value.trim() : "";
+    
+    // التحقق من تعبئة البيانات أولاً
+    if (studentName === "" || seatingNumber === "") {
+        alert("يرجى إدخال الاسم ورقم الجلوس أولاً!");
+        return;
+    }
+    
+    // بناء واجهة الأسئلة فوراً
+    renderQuizInterface();
+}
+
+// ربط احتياطي إضافي لتشغيل الزر عند النقر تلقائياً
 document.addEventListener("DOMContentLoaded", function() {
     const startBtn = document.querySelector(".btn") || document.getElementById("startBtn") || document.querySelector("button");
-    
     if (startBtn) {
-        startBtn.addEventListener("click", function(e) {
+        startBtn.onclick = function(e) {
             e.preventDefault();
-            
-            const nameInput = document.querySelector('input[type="text"]');
-            const seatingInput = document.querySelector('input[type="number"]') || document.querySelectorAll('input');
-            
-            studentName = nameInput ? nameInput.value.trim() : "مصطفى عبد العال";
-            seatingNumber = seatingInput ? seatingInput.value.trim() : "188";
-            
-            if (studentName === "" || seatingNumber === "") {
-                alert("يرجى إدخال الاسم ورقم الجلوس أولاً!");
-                return;
-            }
-            
             startQuiz();
-        });
+        };
     }
 });
 
-// 3. دالة بدء عرض الأسئلة مكان حقول الإدخال
-function startQuiz() {
+// 3. دالة بناء واجهة الأسئلة مكان حقول الإدخال
+function renderQuizInterface() {
     const container = document.querySelector(".container") || document.body;
     container.innerHTML = `
         <div style="text-align: right; direction: rtl; padding: 20px;">
-            <h2 id="questionTitle" style="color: #3f37c9; margin-bottom: 20px;"></h2>
-            <div id="optionsContainer" style="display: flex; flex-direction: column; gap: 10px;"></div>
-            <button id="nextBtn" style="background-color: #7b2cbf; color: white; border: none; padding: 12px 25px; border-radius: 10px; margin-top: 20px; cursor: pointer; font-size: 16px; width: 100%;">التالي</button>
+            <h2 id="questionTitle" style="color: #3f37c9; margin-bottom: 20px; font-size: 22px;"></h2>
+            <div id="optionsContainer" style="display: flex; flex-direction: column; gap: 12px;"></div>
+            <button id="nextBtn" style="background-color: #7b2cbf; color: white; border: none; padding: 14px 25px; border-radius: 10px; margin-top: 25px; cursor: pointer; font-size: 18px; width: 100%; font-weight: bold;">التالي</button>
         </div>
     `;
     showQuestion();
@@ -74,8 +80,8 @@ function showQuestion() {
     
     currentQuestion.options.forEach((option, index) => {
         optionsContainer.innerHTML += `
-            <label style="background: #f0f0f0; padding: 12px; border-radius: 8px; cursor: pointer; display: block; font-size: 16px; margin-bottom: 5px;">
-                <input type="radio" name="quizOption" value="${index}" style="margin-left: 10px;"> ${option}
+            <label style="background: #f8f9fa; padding: 14px; border: 2px solid #e9ecef; border-radius: 10px; cursor: pointer; display: block; font-size: 18px; margin-bottom: 5px; transition: 0.2s;">
+                <input type="radio" name="quizOption" value="${index}" style="margin-left: 12px; transform: scale(1.2);"> ${option}
             </label>
         `;
     });
@@ -88,7 +94,7 @@ function showQuestion() {
     nextBtn.onclick = handleNextClick;
 }
 
-// 5. معالجة الضغط على زر التالي أو الإنهاء
+// 5. معالجة الضغط على زر التالي وحساب النتيجة
 function handleNextClick() {
     const selectedOption = document.querySelector('input[name="quizOption"]:checked');
     if (!selectedOption) {
@@ -108,7 +114,7 @@ function handleNextClick() {
     }
 }
 
-// 6. دالة الإرسال الفعلي وعرض النتيجة في نفس الصفحة دون الانتقال لصفحة 404
+// 6. دالة الإرسال وعرض لوحة النجاح المباشرة بدون الانتقال لصفحة 404
 function sendFinalDataToSheets() {
     const webAppUrl = "https://script.google.com/macros/s/AKfycbxNvwTs6OVjZ52gbkdtzLZnlPPNtYh78IfIp1XkYiD7BARXM00EYJQJzrbp9QG1vpPj/exec"; 
     
@@ -121,19 +127,19 @@ function sendFinalDataToSheets() {
                         "&score=" + encodeURIComponent(finalScoreText) +
                         "&subject=" + encodeURIComponent(subjectName);
 
-    // عرض النتيجة للطالب فوراً لتفادي شاشة الـ 404 المزعجة
+    // بناء شكل التهنئة الفوري والنهائي للطالب في نفس الشاشة
     const container = document.querySelector(".container") || document.body;
     container.innerHTML = `
-        <div style="text-align: center; direction: rtl; padding: 30px;">
-            <h1 style="color: #3f37c9; font-size: 26px;">تم الانتهاء من الاختبار بنجاح</h1>
-            <div style="font-size: 58px; font-weight: bold; color: #7b2cbf; margin: 20px 0;">%${percentage}</div>
-            <div style="color: #2ec4b6; font-size: 18px; font-weight: bold; margin-bottom: 15px;">تم تسجيل إجاباتك وإرسال الدرجة تلقائياً.</div>
-            <div style="font-size: 20px; color: #555555; margin-bottom: 10px;">أحسنت يا ${studentName}!</div>
-            <div style="font-size: 16px; color: #777;">لقد حصلت على درجة: ${finalScoreText}</div>
+        <div style="text-align: center; direction: rtl; padding: 40px 20px;">
+            <h1 style="color: #3f37c9; font-size: 28px; margin-bottom: 10px;">تم الانتهاء من الاختبار بنجاح</h1>
+            <div style="font-size: 64px; font-weight: bold; color: #7b2cbf; margin: 25px 0;">%${percentage}</div>
+            <div style="color: #2ec4b6; font-size: 20px; font-weight: bold; margin-bottom: 20px;">تم تسجيل إجاباتك وإرسال الدرجة تلقائياً للمعلم.</div>
+            <div style="font-size: 22px; color: #333333; margin-bottom: 10px;">أحسنت يا ${studentName}!</div>
+            <div style="font-size: 18px; color: #666666;">لقد حصلت على درجة: ${finalScoreText}</div>
         </div>
     `;
 
-    // إرسال البيانات خلف الكواليس لجوجل شيت بدون حظر CORS
+    // تمرير البيانات السجلية لجوجل شيت خلف الكواليس
     fetch(webAppUrl, {
         method: "POST",
         mode: "no-cors",
@@ -143,9 +149,9 @@ function sendFinalDataToSheets() {
         body: requestBody
     })
     .then(() => {
-        console.log("تم حفظ النتيجة في جوجل شيت بنجاح!");
+        console.log("Data saved to Google Sheets successfully.");
     })
     .catch((error) => {
-        console.error("خطأ في الاتصال بالسيرفر وجداول البيانات:", error);
+        console.error("Error communicating with server:", error);
     });
 }
