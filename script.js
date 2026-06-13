@@ -26,10 +26,8 @@ let score = 0;
 let studentName = "";
 let seatNumber = "";
 
-// توجيه البيانات مباشرة لـ "الورقة1" الخاصة بالإنجليزي لفرزها تلقائياً
- const subjectName = "الانجليزى";
+const subjectName = "الانجليزى"; 
 
-// رابط تطبيق الويب الخاص بك للإرسال لشيت جوجل
 const webAppUrl = "https://script.google.com/macros/s/AKfycbxTOXrDLo7MNOnABa8GaUxECnMVw7LgbjeF7g8-P_piiIe62nIk_67rNFrdVWuDJxLf/exec"; 
 
 const startScreen = document.getElementById('start-screen');
@@ -76,7 +74,6 @@ function loadQuestion() {
 }
 
 function selectAnswer(selectedButton, currentQuestion) {
-    // إزالة الفراغات لضمان المطابقة البصرية والبرمجية التامة
     const selectedOption = selectedButton.textContent.trim();
     const correctOption = currentQuestion.correct.trim();
     
@@ -87,7 +84,7 @@ function selectAnswer(selectedButton, currentQuestion) {
         score++;
         selectedButton.classList.add('correct'); 
     } else {
-        selectedButton.classList.add('wrong'); // متناسق تماماً مع كلاس الـ CSS الحالي لديك
+        selectedButton.classList.add('wrong'); 
         buttons.forEach(button => {
             if (button.textContent.trim() === correctOption) {
                 button.classList.add('correct');
@@ -119,7 +116,7 @@ function showResult() {
         finalScoreElement.textContent = `%${percentage}`;
     }
     
-    document.getElementById('result-text').innerHTML = `أحسنت يا <strong>${studentName}</strong>!<br>لقد حصلت على ${score} من أصل ${quizData.length} إجابات صحيحة.`;
+    document.getElementById('result-text').innerHTML = `أحسنت يا ${studentName}!<br>لقد حصلت على ${score} من ${quizData.length} (${percentage}%)`;
     
     sendDataToSheet();
 }
@@ -137,7 +134,7 @@ function sendDataToSheet() {
     })
     .then(response => {
         if(response.ok) {
-            console.log("Data sent to Google Sheets successfully.");
+            console.log("Data sent successfully.");
         } else {
             console.error("Failed to send data.");
         }
