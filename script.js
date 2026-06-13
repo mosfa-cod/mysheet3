@@ -21,7 +21,6 @@
   }
 ];
 
-
 let currentQuestionIndex = 0;
 let score = 0;
 let studentName = "";
@@ -64,78 +63,81 @@ function loadQuestion() {
     optionsContainer.innerHTML = "";
     
     const currentQuestion = quizData[currentQuestionIndex];
-    progressText.innerText = `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
-    questionText.innerText = currentQuestion.question;
-
-    currentQuestion.options.forEach((option, index) => {
+    questionText.textContent = currentQuestion.question;
+    progressText.textContent = `السؤال ${currentQuestionIndex + 1} من ${quizData.length}`;
+    
+    currentQuestion.options.forEach(option => {
         const button = document.createElement('button');
-        button.innerText = option;
+        button.textContent = option;
         button.classList.add('option-btn');
-        button.addEventListener('click', () => selectOption(button, index));
+        button.addEventListener('click', () => selectAnswer(button, currentQuestion));
         optionsContainer.appendChild(button);
     });
 }
-    // 🛡️ درع حماية زمني لمنع تداخل النقرات الممتدة وتجميد الأجوبة لـ 400 مللي ثانية
-    const allOptions = document.querySelectorAll('.option-btn');
-    allOptions.forEach(btn => btn.style.pointerEvents = 'none');
-    setTimeout(() => {
-        allOptions.forEach(btn => btn.style.pointerEvents = 'auto');
-    }, 400);
 
-
-function selectOption(selectedBtn, index) {
-    const currentQuestion = quizData[currentQuestionIndex];
-    const allButtons = optionsContainer.querySelectorAll('.option-btn');
-    allButtons.forEach(btn => btn.disabled = true);
-
-    if (index === currentQuestion.correct) {
-        selectedBtn.classList.add('correct');
+function selectAnswer(selectedButton, currentQuestion) {
+    const selectedOption = selectedButton.textContent;
+    const correctOption = currentQuestion.correct;
+    
+    // Disable all option buttons after selection
+    const buttons = optionsContainer.querySelectorAll('.option-btn');
+    buttons.forEach(button => button.disabled = true);
+    
+    // Highlight correct and incorrect answers
+    if (selectedOption === correctOption) {
         score++;
+        selectedButton.classList.add('correct'); // Add CSS class for correct styling
     } else {
-        selectedBtn.classList.add('wrong');
-        allButtons[currentQuestion.correct].classList.add('correct');
+        selectedButton.classList.add('incorrect'); // Add CSS class for incorrect styling
+        // Highlight the correct one
+        buttons.forEach(button => {
+            if (button.textContent === correctOption) {
+                button.classList.add('correct');
+            }
+        });
     }
+    
     nextBtn.classList.remove('hidden');
 }
 
 nextBtn.addEventListener('click', () => {
     currentQuestionIndex++;
+    
     if (currentQuestionIndex < quizData.length) {
         loadQuestion();
     } else {
-        showResults();
+        showResult();
     }
 });
 
-function showResults() {
+function showResult() {
     quizScreen.classList.add('hidden');
     resultScreen.classList.remove('hidden');
     
-    document.getElementById('display-name').innerText = studentName;
-    document.getElementById('display-seat').innerText = seatNumber;
-    document.getElementById('final-score').innerText = score;
-    document.getElementById('total-questions').innerText = quizData.length;
+    const percentage = Math.round((score / quizData.length) * 100);
+    document.getElementById('result-text').innerHTML = `أحسنت يا ${studentName}!<br>لقد حصلت على ${score} من ${quizData.length} (${percentage}%)`;
+    
+    // Send Data to Google Sheets
+    sendDataToSheet();
+}
 
-    const payload = {
-        studentName: studentName,
-        seatNumber: seatNumber,
-        studentScore: `${score} / ${quizData.length}`,
-subjectName: "الانجليزى"
-    };
+function sendDataToSheet() {
+    const formData = new FormData();
+    formData.append('studentName', studentName);
+    formData.append('seatNumber', seatNumber);
+    formData.append('score', score);
+    formData.append('subject', subjectName);
 
     fetch(webAppUrl, {
         method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: formData
     })
-    .then(() => {
-        document.getElementById('upload-status').innerText = "✅ Your result has been saved to the sheet successfully!";
-        document.getElementById('upload-status').className = "status-message";
+    .then(response => {
+        if(response.ok) {
+            console.log("Data sent to Google Sheets successfully.");
+        } else {
+            console.error("Failed to send data.");
+        }
     })
-    .catch(error => {
-        console.error("Error:", error);
-        document.getElementById('upload-status').innerText = "❌ Error uploading result.";
-        document.getElementById('upload-status').style.color = "red";
-    });
+    .catch(error => console.error('Error!', error.message));
 }
