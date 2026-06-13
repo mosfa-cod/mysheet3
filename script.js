@@ -31,7 +31,7 @@ let seatNumber = "";
 const subjectName = "الورقة1"; 
 
 // ⚠️ ضع رابط تطبيق الويب الموحد الخاص بك (الإصدار 11) هنا:
-const webAppUrl = "https://script.google.com/macros/s/AKfycbxuxoyjtyQdzvS1wysY0xMUZPHZvVVrQQaiEo6nrkWQqfmWogvVa2r5GA4CIe_txFXw/exec"; 
+const webAppUrl = "https://script.google.com/macros/s/AKfycbyG2vRL6moDgnqL7uO4gUiUuI3Z1DI1f6OLSG_AIpAdLE8U80YME2bC3LFbHcRbosDX/exec"; 
 
 const startScreen = document.getElementById('start-screen');
 const quizScreen = document.getElementById('quiz-screen');
