@@ -3,56 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Language Exam</title>
+    <title>اختبار اللغة الإنجليزية</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="container">
-        <!-- 1. شاشة البداية وتسجيل البيانات -->
+        <!-- 1. شاشة البدء ودخول الطالب -->
         <div id="start-screen" class="card">
-            <h1 class="main-title">🇬🇧 English Language Exam</h1>
-            <p class="subtitle">Primary Stage Quiz</p>
+            <h1 class="main-title">اختبار اللغة الإنجليزية</h1>
+            <p class="subtitle">يرجى إدخال البيانات للبدء</p>
             
             <div class="input-group">
-                <label>يرجى كتابة اسمك الثلاثي:</label>
-                <input type="text" id="student-name" placeholder="أحمد محمد علي" required>
+                <label for="student-name">اسم الطالب ثلاثي:</label>
+                <input type="text" id="student-name" placeholder="أدخل اسمك هنا..." autocomplete="off">
             </div>
-
+            
             <div class="input-group">
-                <label>يرجى كتابة رقم الجلوس:</label>
-                <input type="text" id="seat-number" placeholder="1024" required>
+                <label for="seat-number">رقم الجلوس:</label>
+                <input type="text" id="seat-number" placeholder="أدخل رقم جلوسك..." autocomplete="off">
             </div>
-
-            <button id="start-btn" class="btn">
-                <span>Start English Test 📝</span>
-            </button>
+            
+            <button id="start-btn" class="btn">ابدأ الاختبار الآن</button>
         </div>
 
-        <!-- 2. شاشة عرض الأسئلة الإنجليزية -->
+        <!-- 2. شاشة عرض الأسئلة الكويز -->
         <div id="quiz-screen" class="card hidden">
             <div class="quiz-header">
-                <span id="progress">Question 1 of 4</span>
+                <span id="progress">السؤال 1 من 4</span>
+                <span id="subject-title">اللغة الإنجليزية</span>
             </div>
-            <h2 id="question-text" style="direction: ltr; text-align: left; padding: 10px; font-weight: bold; color: #2b2d42;">Question text goes here?</h2>
-            <div id="options-container" class="options-grid" style="direction: ltr;">
-                <!-- الخيارات يتم إنشاؤها عبر الجافا سكريبت -->
-            </div>
-            <button id="next-btn" class="btn hidden">Next Question ⬅️</button>
+            
+            <!-- نص السؤال مائل لليسار ليناسب اللغة الإنجليزية -->
+            <h2 id="question-text" style="text-align: left; direction: ltr; margin: 25px 0; color: #2d3748;"></h2>
+            
+            <!-- حاوية خيارات الأجوبة المتناسقة منعاً للتداخل -->
+            <div id="options-container" class="options-grid"></div>
+            
+            <!-- زر الانتقال للسؤال التالي المصلح والمحمي -->
+            <button id="next-btn" class="btn hidden">السؤال التالي ←</button>
         </div>
 
-        <!-- 3. شاشة النتيجة والنهاية -->
+        <!-- 3. شاشة عرض النتيجة النهائية -->
         <div id="result-screen" class="card hidden">
-            <h2 class="result-title">Congratulations! You finished the test.</h2>
-            <div class="student-info-box">
-                <p>الطالب: <span id="display-name" style="font-weight: bold;"></span></p>
-                <p>رقم الجلوس: <span id="display-seat" style="font-weight: bold;"></span></p>
-            </div>
+            <h1 class="main-title">تم الانتهاء من الاختبار</h1>
             <div class="score-box">
-                <p>Your Score is:</p>
-                <span id="final-score">0</span> / <span id="total-questions">0</span>
+                <div id="final-score">0</div>
+                <p class="status-message" id="result-message">تم إرسال درجتك تلقائياً إلى المعلم.</p>
             </div>
-            <p id="upload-status" style="color: #666; font-style: italic;">جاري إرسال نتيجتك إلى جدول بيانات اللغة الإنجليزية...</p>
+            <div id="result-text" style="font-size: 18px; color: #4a5568; line-height: 1.6; margin-top: 15px;"></div>
         </div>
     </div>
 
