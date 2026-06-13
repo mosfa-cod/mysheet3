@@ -30,7 +30,7 @@ let seatNumber = "";
 const subjectName = "الورقة1"; 
 
 // رابط تطبيق الويب الخاص بك للإرسال لشيت جوجل
-const webAppUrl = "https://script.google.com/macros/s/AKfycbw1e0InrFkVdabwDd5F_WbHSqYtHphtbscWoYulYWsxUjI0cypHPZ7LPXOSJXuatq_S/exec"; 
+const webAppUrl = "https://script.google.com/macros/s/AKfycbxTOXrDLo7MNOnABa8GaUxECnMVw7LgbjeF7g8-P_piiIe62nIk_67rNFrdVWuDJxLf/exec"; 
 
 const startScreen = document.getElementById('start-screen');
 const quizScreen = document.getElementById('quiz-screen');
