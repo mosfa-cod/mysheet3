@@ -1,0 +1,61 @@
+ <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Language Exam</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <!-- 1. شاشة البداية وتسجيل البيانات -->
+        <div id="start-screen" class="card">
+            <h1 class="main-title">🇬🇧 English Language Exam</h1>
+            <p class="subtitle">Primary Stage Quiz</p>
+            
+            <div class="input-group">
+                <label>يرجى كتابة اسمك الثلاثي:</label>
+                <input type="text" id="student-name" placeholder="أحمد محمد علي" required>
+            </div>
+
+            <div class="input-group">
+                <label>يرجى كتابة رقم الجلوس:</label>
+                <input type="text" id="seat-number" placeholder="1024" required>
+            </div>
+
+            <button id="start-btn" class="btn">
+                <span>Start English Test 📝</span>
+            </button>
+        </div>
+
+        <!-- 2. شاشة عرض الأسئلة الإنجليزية -->
+        <div id="quiz-screen" class="card hidden">
+            <div class="quiz-header">
+                <span id="progress">Question 1 of 4</span>
+            </div>
+            <h2 id="question-text" style="direction: ltr; text-align: left; padding: 10px; font-weight: bold; color: #2b2d42;">Question text goes here?</h2>
+            <div id="options-container" class="options-grid" style="direction: ltr;">
+                <!-- الخيارات يتم إنشاؤها عبر الجافا سكريبت -->
+            </div>
+            <button id="next-btn" class="btn hidden">Next Question ⬅️</button>
+        </div>
+
+        <!-- 3. شاشة النتيجة والنهاية -->
+        <div id="result-screen" class="card hidden">
+            <h2 class="result-title">Congratulations! You finished the test.</h2>
+            <div class="student-info-box">
+                <p>الطالب: <span id="display-name" style="font-weight: bold;"></span></p>
+                <p>رقم الجلوس: <span id="display-seat" style="font-weight: bold;"></span></p>
+            </div>
+            <div class="score-box">
+                <p>Your Score is:</p>
+                <span id="final-score">0</span> / <span id="total-questions">0</span>
+            </div>
+            <p id="upload-status" style="color: #666; font-style: italic;">جاري إرسال نتيجتك إلى جدول بيانات اللغة الإنجليزية...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
